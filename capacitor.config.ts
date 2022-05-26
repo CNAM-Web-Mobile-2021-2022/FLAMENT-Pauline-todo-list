@@ -2,9 +2,9 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'todo-list',
+  appName: 'photo-gallery',
   webDir: 'build',
-  bundledWebRuntime: false
+  bundledWebRuntime: true
 };
 
 export default config;
