@@ -15,12 +15,7 @@ import {
 
   import React from "react";
 
-  //import { Todo }  from "../hooks/useTodoList"
-
-  /*import { useEffect, useState } from "react"
-  import { useStorage } from "@capacitor-community/storage-react";*/
-  
-
+  //import { addTodoList }  from "../hooks/addTodoList"
 
   const TodoList: React.FC = () => {
 
@@ -34,7 +29,7 @@ import {
               </IonSegmentButton>
   
               <IonSegmentButton value="todo">
-                <IonLabel className="button-todo">
+                <IonLabel>
                   À faire
                 </IonLabel>
               </IonSegmentButton>
