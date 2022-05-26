@@ -11,19 +11,32 @@ import {
     IonSegmentButton,
     IonFooter,
     IonInput,
+    IonBadge,
   } from "@ionic/react";
 
-  import React from "react";
+  import React, { useState } from "react";
 
-  //import { addTodoList }  from "../hooks/addTodoList"
+  import { AddItem } from "./AddItem";
+  import { UseAddTodoList }  from "../hooks/addTodoList"
 
-  const TodoList: React.FC = () => {
+  export const TodoList: React.FC = () => {
+
+    const [text, setText] = useState("");
+    const [filterMode, setFilterMode] = useState("all");
+    const { list, addTodo, updateTodo, deleteTodo } = UseAddTodoList();
+    const todoTasksLength = list.filter((item) => !item.done).length;
+    const visibleTodoList = list.filter((item) => !item.done);
 
     return (
       <IonPage>
         <IonHeader>
           <IonToolbar>
-            <IonSegment>
+            <IonSegment
+              onIonChange={(e) => {
+                setFilterMode(e.detail.value);
+              }}
+              value={filterMode}
+            >
               <IonSegmentButton value="all">
                 <IonLabel>Tout</IonLabel>
               </IonSegmentButton>
@@ -31,6 +44,9 @@ import {
               <IonSegmentButton value="todo">
                 <IonLabel>
                   À faire
+                  {todoTasksLength ? (
+                  <IonBadge>{todoTasksLength}</IonBadge>
+                ) : null}
                 </IonLabel>
               </IonSegmentButton>
   
@@ -43,21 +59,47 @@ import {
         </IonHeader>
   
         <IonContent fullscreen>
-    
-        <IonList>
-        
+         <IonList>
+         {!todoTasksLength && (
             <IonItem>
               <small>Votre liste est vide, bravo !</small>
             </IonItem>
+          )}
+
+          {visibleTodoList.map((TodoItem) => {
+            return (
+              <AddItem
+                key={TodoItem.id}
+                text={TodoItem.text}
+                done={TodoItem.done}
+                onChange={(overrides) => updateTodo(TodoItem.id, overrides)}
+                onDelete={() => deleteTodo(TodoItem.id)}
+              />
+            );
+          })}
           </IonList>
+
         </IonContent>
   
         <IonFooter>
-          <form>
+          <form
+          onSubmit={(event) => {
+            if (text?.trim()) {
+              addTodo(text);
+            }
+            setText("");
+            event.preventDefault();
+          }}
+          >
           
             <IonItem>
-              <IonInput placeholder="Avez-vous quelque chose en tête ?" />
-              <IonButton type="submit">
+              <IonInput  
+              value={text}
+              placeholder="Avez-vous quelque chose en tête ?"
+              onIonChange={(event) => setText(event.detail.value!)}
+              clearInput
+              />
+              <IonButton type="submit" disabled={!text}>
                 Créer
               </IonButton>
             </IonItem>
