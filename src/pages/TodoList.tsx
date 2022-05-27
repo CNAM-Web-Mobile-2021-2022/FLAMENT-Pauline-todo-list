@@ -22,7 +22,7 @@ import {
   export const TodoList: React.FC = () => {
 
     const [text, setText] = useState("");
-    const [filterMode, setFilterMode] = useState("all");
+    const [filter, setFilter] = useState("all");
     const { list, addTodo, updateTodo, deleteTodo } = UseAddTodoList();
     const todoTasksLength = list.filter((item) => !item.done).length;
     const visibleTodoList = list.filter((item) => !item.done);
@@ -33,9 +33,9 @@ import {
           <IonToolbar>
             <IonSegment
               onIonChange={(e) => {
-                setFilterMode(e.detail.value);
+                setFilter(e.detail.value);
               }}
-              value={filterMode}
+              value={filter}
             >
               <IonSegmentButton value="all">
                 <IonLabel>Tout</IonLabel>

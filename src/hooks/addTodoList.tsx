@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useStorage } from "@capacitor-community/storage-react/dist";
 
-const STORAGE_KEY = "yet-another-todo-list";
+const STORAGE_KEY = "todo-list";
 
 export function UseAddTodoList() {
   const [list, setTodo] = useState([]);
@@ -13,8 +13,8 @@ export function UseAddTodoList() {
 
       if (storedList) {
         try {
-          const parsedList = JSON.parse(storedList);
-          setTodo(parsedList);
+          const analysisList = JSON.parse(storedList);
+          setTodo(analysisList);
         } catch {}
       }
     }
